@@ -1,10 +1,8 @@
--- Inserting Musician Data
 INSERT INTO Musician (name, birth_date, nationality) VALUES 
     ('Dido', '1971-12-25', 'British'),
     ('Lauryn Hill', '1975-05-26', 'American'),
     ('Lenny Kravitz', '1964-05-26', 'American');
 
--- Inserting Album Data
 INSERT INTO Album (title, release_date, musician_id) VALUES 
     ('No Angel', '2000-06-19', 1),
     ('The Miseducation of Lauryn Hill', '1998-08-25', 2)
@@ -24,7 +22,6 @@ INSERT INTO Song (title, duration, album_id, track_number) VALUES
     ('To Zion', 388, 2, 4),
     ('Lost Ones', 296, 2, 5);
 
--- Inserting Song Data for Lenny Kravitz - Are You Gonna Go My Way (1993)
 INSERT INTO Song (title, duration, album_id, track_number) VALUES 
     ('Are You Gonna Go My Way', 231, 3, 1),
     ('Mr. Cab Driver', 271, 3, 2),
