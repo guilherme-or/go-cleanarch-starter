@@ -1,4 +1,4 @@
-CREATE TABLE musicians(
+CREATE TABLE artists(
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
     birth_date DATE,
@@ -9,9 +9,9 @@ CREATE TABLE albums(
     id SERIAL PRIMARY KEY,
     title VARCHAR(150) NOT NULL,
     release_date DATE NOT NULL,
-    musician_id INT NOT NULL,
-    CONSTRAINT fk_album_musician FOREIGN KEY (musician_id) REFERENCES musicians(id) ON DELETE CASCADE,
-    UNIQUE (title, musician_id) -- Ensuring a musician doesn't release two albums with the same title
+    artist_id INT NOT NULL,
+    CONSTRAINT fk_album_artist FOREIGN KEY (artist_id) REFERENCES artist(id) ON DELETE CASCADE,
+    UNIQUE (title, artist_id) -- Ensuring a artist doesn't release two albums with the same title
 );
 
 CREATE TABLE songs(
@@ -26,5 +26,5 @@ CREATE TABLE songs(
 );
 
 -- Indexes for performance optimization
-CREATE INDEX idx_album_musician ON albums(musician_id);
+CREATE INDEX idx_album_artist ON albums(artist_id);
 CREATE INDEX idx_song_album ON songs(album_id);
