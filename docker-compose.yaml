@@ -9,6 +9,9 @@ services:
       - "5432:5432"
     volumes:
       - default:/var/lib/postgresql/data
+      # Mounting the initial migration and dump files
+      - ./infra/database/migrations/initial.sql:/docker-entrypoint-initdb.d/initial_migration.sql
+      - ./infra/database/dump/initial.sql:/docker-entrypoint-initdb.d/initial_dump.sql
     networks:
       - default
 
