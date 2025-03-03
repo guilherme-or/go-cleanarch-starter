@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 
-	"github.com/guilherme-or/go-cleanarch-starter/internal/config"
+	"github.com/guilherme-or/go-cleanarch-starter/internal/infra/config"
 	_ "github.com/lib/pq"
 )
 

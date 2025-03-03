@@ -6,7 +6,7 @@ import (
 	"database/sql"
 	"github.com/guilherme-or/go-cleanarch-starter/internal/infra/database"
 
-	"github.com/guilherme-or/go-cleanarch-starter/internal/config"
+	"github.com/guilherme-or/go-cleanarch-starter/internal/infra/config"
 )
 
 func main() {
