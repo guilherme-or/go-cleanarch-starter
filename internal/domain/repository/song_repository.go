@@ -3,8 +3,18 @@ package repository
 
 import "github.com/guilherme-or/go-cleanarch-starter/internal/domain/entity"
 
+// SongRepository defines the interface for song-related data operations.
+// It provides methods to find songs based on various criteria such as duration, artist, and album.
 type SongRepository interface {
+	// FindByDuration retrieves a list of songs that match the specified duration in seconds.
+	// Returns a slice of Song entities and an error if any issues occur during the retrieval.
 	FindByDuration(durationInS int) ([]*entity.Song, error)
+
+	// FindByArtist retrieves a list of songs associated with the specified artist ID.
+	// Returns a slice of Song entities and an error if any issues occur during the retrieval.
 	FindByArtist(artistID int) ([]*entity.Song, error)
+
+	// FindByAlbum retrieves a list of songs associated with the specified album ID.
+	// Returns a slice of Song entities and an error if any issues occur during the retrieval.
 	FindByAlbum(albumID int) ([]*entity.Song, error)
 }
