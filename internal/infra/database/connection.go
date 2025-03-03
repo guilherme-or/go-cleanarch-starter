@@ -7,16 +7,16 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func PostgreSQLConn() *sql.DB {
+func PostgreSQLConn() (*sql.DB, error) {
 	db, err := sql.Open("postgres", config.E.Database.DSN)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	err = db.Ping()
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return db
+	return db, nil
 }
