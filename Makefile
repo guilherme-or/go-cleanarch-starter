@@ -1,4 +1,5 @@
 # Scaffold commands
+
 entity:
 	@echo "Creating entity..."
 	@go run ./cmd/scaffold/entity/main.go
@@ -9,9 +10,9 @@ usecase:
 
 # Testing coverage commands
 
-go-test:
+test:
 	@echo "Running all app tests..."
-	@go test -v ./...
+	@go test -v ./internal/...
 
 # Application commands
 
