@@ -1,9 +1,9 @@
-INSERT INTO musicians(name, birth_date, nationality) VALUES 
+INSERT INTO artists(name, birth_date, nationality) VALUES 
     ('Dido', '1971-12-25', 'British'),
     ('Lauryn Hill', '1975-05-26', 'American'),
     ('Daft Punk', '1993-01-01', 'French');
 
-INSERT INTO albums(title, release_date, musician_id) VALUES 
+INSERT INTO albums(title, release_date, artist_id) VALUES 
     ('No Angel', '2000-06-19', 1),
     ('The Miseducation of Lauryn Hill', '1998-08-25', 2),
     ('Discovery', '2001-03-12', 3),
