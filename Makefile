@@ -1,11 +1,23 @@
 # Scaffold commands
 
 entity:
-	@echo "Creating entity..."
+	@echo "Scaffolding entity..."
 	@go run ./cmd/scaffold/entity/main.go
 
+entity-test:
+	@echo "Scaffolding entity test..."
+	@go run ./cmd/scaffold/entity_test/main.go
+
+repository:
+	@echo "Scaffolding repository..."
+	@go run ./cmd/scaffold/repository/main.go
+
+dto:
+	@echo "Scaffolding DTO..."
+	@go run ./cmd/scaffold/dto/main.go
+
 usecase:
-	@echo "Creating usecase..."
+	@echo "Scaffolding usecase..."
 	@go run ./cmd/scaffold/usecase/main.go
 
 # Testing coverage commands
