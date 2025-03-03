@@ -22,6 +22,10 @@ usecase:
 
 # Testing coverage commands
 
+test-entity:
+	@echo "Running entity unit tests..."
+	@go test -v ./internal/domain/entity/...
+
 test:
 	@echo "Running all app tests..."
 	@go test -v ./internal/...
