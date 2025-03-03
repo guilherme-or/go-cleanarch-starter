@@ -1,3 +1,7 @@
+# Binaries and Builds
+*.exe
+/bin
+
 # Environment
 .env
 .*rc
