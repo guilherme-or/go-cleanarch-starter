@@ -11,11 +11,17 @@ import (
 
 func main() {
 	// Load environment variables
-	config.LoadEnv()
+	configLoad()
 
 	// Connect to the database and close it when at its end
 	db := databaseConn()
 	defer db.Close()
+}
+
+func configLoad() {
+	if err := config.LoadEnv(); err != nil {
+		panic(err)
+	}
 }
 
 // Open a new database connection

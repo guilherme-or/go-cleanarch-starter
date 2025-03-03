@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -18,12 +19,13 @@ var shouldLoad = []string{
 
 // Checks if the required environment variables are set.
 // Otherwise, it panics.
-func checkRequired() {
+func checkRequired() error {
 	for _, key := range shouldLoad {
 		if _, exists := os.LookupEnv(key); !exists {
-			panic(key + " environment variable is required")
+			return fmt.Errorf("config load err: %s environment variable is required", key)
 		}
 	}
+	return nil
 }
 
 // LoadEnv loads the environment configuration manually.
@@ -31,16 +33,20 @@ func checkRequired() {
 // If no filenames are provided, it will assume the variables are already in the system.
 // IMPORTANT: Should be called at the beginning of the main function,
 // as other packages may depend on the environment configuration.
-func LoadEnv(filenames ...string) {
+func LoadEnv(filenames ...string) error {
 	if len(filenames) > 0 {
 		err := godotenv.Overload(filenames...)
 		if err != nil {
-			panic(err)
+			return fmt.Errorf("dotenv files err: %s", err.Error())
 		}
 	}
 
-	checkRequired()
+	if err := checkRequired(); err != nil {
+		return err
+	}
 
 	// database configuration
 	E.Database.DSN = os.Getenv("DATABASE_DSN")
+
+	return nil
 }
