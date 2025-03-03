@@ -1,0 +1,8 @@
+# Environment
+.env
+.*rc
+*.log
+
+# IDE
+.idea
+.vscode
