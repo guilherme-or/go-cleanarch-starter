@@ -85,7 +85,7 @@ func (p *PostgreSQLAlbumRepository) FindByArtist(artistID int) ([]*entity.Album,
 		albums = append(albums, &album)
 	}
 
-	if rows.Err() != nil {
+	if err := rows.Err(); err != nil {
 		return nil, err
 	}
 
@@ -113,7 +113,7 @@ func (p *PostgreSQLAlbumRepository) FindByYear(year int) ([]*entity.Album, error
 		albums = append(albums, &album)
 	}
 
-	if rows.Err() != nil {
+	if err := rows.Err(); err != nil {
 		return nil, rows.Err()
 	}
 
