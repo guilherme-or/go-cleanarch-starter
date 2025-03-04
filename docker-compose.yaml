@@ -4,19 +4,9 @@ services:
     environment:
       POSTGRES_USER: docker
       POSTGRES_PASSWORD: docker
-      POSTGRES_DB: default
+      POSTGRES_DB: example
     ports:
       - "5432:5432"
     volumes:
-      - default:/var/lib/postgresql/data
       # Mounting the initial migration and dump files
-      - ./internal/infra/sql/migrations/initial.sql:/docker-entrypoint-initdb.d/initial_migration.sql
-      - ./internal/infra/sql/dump/initial.sql:/docker-entrypoint-initdb.d/initial_dump.sql
-    networks:
-      - default
-
-volumes:
-  default:
-
-networks:
-  default:
+      - ./internal/infra/sql/migration/initial.sql:/docker-entrypoint-initdb.d/initial.sql
