@@ -15,6 +15,11 @@ func NewPostgreSQLSongRepository(db *sql.DB) repository.SongRepository {
 	return &PostgreSQLSongRepository{db: db}
 }
 
+// FindByDuration implements repository.SongRepository.
+func (p *PostgreSQLSongRepository) FindByDuration(startDuration, endDuration int) ([]*entity.Song, error) {
+	panic("unimplemented")
+}
+
 // FindByAlbum implements repository.SongRepository.
 func (p *PostgreSQLSongRepository) FindByAlbum(albumID int) ([]*entity.Song, error) {
 	panic("unimplemented")
@@ -22,10 +27,5 @@ func (p *PostgreSQLSongRepository) FindByAlbum(albumID int) ([]*entity.Song, err
 
 // FindByArtist implements repository.SongRepository.
 func (p *PostgreSQLSongRepository) FindByArtist(artistID int) ([]*entity.Song, error) {
-	panic("unimplemented")
-}
-
-// FindByDuration implements repository.SongRepository.
-func (p *PostgreSQLSongRepository) FindByDuration(durationInS int) ([]*entity.Song, error) {
 	panic("unimplemented")
 }
