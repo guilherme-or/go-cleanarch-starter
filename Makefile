@@ -30,7 +30,7 @@ test:
 	@echo "Running all app tests..."
 	@go test -v ./internal/...
 
-# Application commands
+# Build commands
 
 scaffold-build:
 	@echo "Building scaffold app..."
@@ -43,12 +43,24 @@ go-build:
 	@echo "Building app..."
 	@go build -o ./bin/app ./cmd/app/main.go
 
+build: scaffold-build go-build
+
+# Application commands
+
 go-run:
 	@echo "Running app..."
 	@go run ./cmd/app/main.go
 
-build: scaffold-build go-build
-
-run: go-build
+run-dev: go-build
 	@echo "Running app..."
 	@./bin/app
+
+run:
+	@echo "Running existing app..."
+	@if [ -f ./bin/app ]; then ./bin/app; else go run ./cmd/app/main.go; fi
+
+# Docker commands
+
+container:
+	@echo "Creating and running application containers with Docker..."
+	@docker compose -f ./docker-compose.yaml up --build --force-recreate -d
