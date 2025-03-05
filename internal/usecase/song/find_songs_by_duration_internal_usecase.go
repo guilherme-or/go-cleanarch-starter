@@ -5,17 +5,17 @@ import (
 	"github.com/guilherme-or/go-cleanarch-starter/internal/domain/repository"
 )
 
-type FindSongsByDurationInternalUseCase struct {
+type FindSongsByDurationIntervalUseCase struct {
 	songRepository repository.SongRepository
 }
 
-func NewFindSongsByDurationInternalUseCase(songRepository repository.SongRepository) *FindSongsByDurationInternalUseCase {
-	return &FindSongsByDurationInternalUseCase{
+func NewFindSongsByDurationInternalUseCase(songRepository repository.SongRepository) *FindSongsByDurationIntervalUseCase {
+	return &FindSongsByDurationIntervalUseCase{
 		songRepository: songRepository,
 	}
 }
 
-func (u *FindSongsByDurationInternalUseCase) Execute(startDuration, endDuration int) ([]*dto.SongDTO, error) {
+func (u *FindSongsByDurationIntervalUseCase) Execute(startDuration, endDuration int) ([]*dto.SongDTO, error) {
 	songs, err := u.songRepository.FindByDuration(startDuration, endDuration)
 	if err != nil {
 		return nil, err
