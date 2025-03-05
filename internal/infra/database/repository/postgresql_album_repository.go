@@ -11,10 +11,11 @@ var (
 	queryFindAlbumByTitle = `
 		SELECT
 			al.id, al.title, al.release_date,
-			ar.id, ar.name, ar.birth_date, ar.nationality
+			ar.id, ar.name, ar.birth_date, ar.nationality,
+			so.id, so.title, so.duration, so.track_number
 		FROM albums al
-		INNER JOIN artists ar
-		ON al.artist_id = ar.id
+		INNER JOIN songs so ON so.album_id = al.id
+		INNER JOIN artists ar ON al.artist_id = ar.id
 		WHERE al.title = $1
 	`
 	queryFindAlbumsByArtist = `
@@ -43,23 +44,40 @@ func NewPostgreSQLAlbumRepository(db *sql.DB) repository.AlbumRepository {
 
 // FindByTitle implements repository.AlbumRepository.
 func (p *PostgreSQLAlbumRepository) FindByTitle(title string) (*entity.Album, error) {
-	row := p.db.QueryRow(queryFindAlbumByTitle, title)
+	rows, err := p.db.Query(queryFindAlbumByTitle, title)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
 	var album entity.Album
 	var artist entity.Artist
-
-	if err := row.Scan(
-		&album.ID,
-		&album.Title,
-		&album.ReleaseDate,
-		&artist.ID,
-		&artist.Name,
-		&artist.BirthDate,
-		&artist.Nationality,
-	); err != nil {
+	var songs []*entity.Song
+	for rows.Next() {
+		var song entity.Song
+		if err := rows.Scan(
+			&album.ID,
+			&album.Title,
+			&album.ReleaseDate,
+			&artist.ID,
+			&artist.Name,
+			&artist.BirthDate,
+			&artist.Nationality,
+			&song.ID,
+			&song.Title,
+			&song.Duration,
+			&song.TrackNumber,
+		); err != nil {
+			return nil, err
+		}
+		songs = append(songs, &song)
+	}
+	if err := rows.Err(); err != nil {
 		return nil, err
 	}
 
 	album.Artist = &artist
+	album.Songs = songs
 
 	return &album, nil
 }
