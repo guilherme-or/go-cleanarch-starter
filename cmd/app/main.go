@@ -5,8 +5,11 @@ package main
 import (
 	"database/sql"
 
+	"github.com/guilherme-or/go-cleanarch-starter/internal/adapter"
+	"github.com/guilherme-or/go-cleanarch-starter/internal/adapter/controller"
 	"github.com/guilherme-or/go-cleanarch-starter/internal/infra/database"
 	database_repository "github.com/guilherme-or/go-cleanarch-starter/internal/infra/database/repository"
+	"github.com/guilherme-or/go-cleanarch-starter/internal/infra/http/api"
 	album_usecase "github.com/guilherme-or/go-cleanarch-starter/internal/usecase/album"
 	artist_usecase "github.com/guilherme-or/go-cleanarch-starter/internal/usecase/artist"
 	song_usecase "github.com/guilherme-or/go-cleanarch-starter/internal/usecase/song"
@@ -23,7 +26,13 @@ func main() {
 	defer db.Close()
 
 	// Instantiate dependencies
-	deps(db)
+	controllers := deps(db)
+
+	// Create application server
+	server := app(controllers)
+
+	// Start server (loop)
+	server.Start()
 }
 
 // Loads environment configuration variables
@@ -42,7 +51,8 @@ func db() *sql.DB {
 	return db
 }
 
-func deps(db *sql.DB) {
+// Create all dependencies (repos, use cases, controllers)
+func deps(db *sql.DB) []adapter.Controller {
 	// Repositories
 	artistRepo := database_repository.NewPostgreSQLArtistRepository(db)
 	albumRepo := database_repository.NewPostgreSQLAlbumRepository(db)
@@ -63,4 +73,32 @@ func deps(db *sql.DB) {
 	findSongsByAlbumUC := song_usecase.NewFindSongsByAlbumUseCase(songRepo)
 	findSongsByDurationIntervalUC := song_usecase.NewFindSongsByDurationInternalUseCase(songRepo)
 	findSongsByArtistUC := song_usecase.NewFindSongsByArtistUseCase(songRepo)
+
+	// Controllers
+	artistController := controller.NewArtistController(
+		findAllArtistsUC,
+		findArtistByNameUC,
+		findArtistsByNationalityUC,
+	)
+	albumController := controller.NewAlbumController(
+		findAlbumByTitleUC,
+		findAlbumsByArtistUC,
+		findAlbumsByYearUC,
+	)
+	songController := controller.NewSongController(
+		findSongsByDurationIntervalUC,
+		findSongsByAlbumUC,
+		findSongsByArtistUC,
+	)
+
+	return []adapter.Controller{
+		artistController,
+		albumController,
+		songController,
+	}
+}
+
+func app(controllers []adapter.Controller) adapter.Server {
+	server := api.NewAPIServer(controllers)
+	return server
 }
