@@ -9,7 +9,7 @@ type FindAlbumsByArtistUseCase struct {
 	albumRepository repository.AlbumRepository
 }
 
-func NewFindAlbumByArtistUseCase(albumRepository repository.AlbumRepository) *FindAlbumsByArtistUseCase {
+func NewFindAlbumsByArtistUseCase(albumRepository repository.AlbumRepository) *FindAlbumsByArtistUseCase {
 	return &FindAlbumsByArtistUseCase{
 		albumRepository: albumRepository,
 	}

@@ -9,7 +9,7 @@ type FindSongsByArtistInternalUseCase struct {
 	songRepository repository.SongRepository
 }
 
-func NewFindSongsByArtistInternalUseCase(songRepository repository.SongRepository) *FindSongsByArtistInternalUseCase {
+func NewFindSongsByArtistUseCase(songRepository repository.SongRepository) *FindSongsByArtistInternalUseCase {
 	return &FindSongsByArtistInternalUseCase{
 		songRepository: songRepository,
 	}
