@@ -5,17 +5,17 @@ import (
 	"github.com/guilherme-or/go-cleanarch-starter/internal/domain/repository"
 )
 
-type FindAlbumsByYearUsecase struct {
+type FindAlbumsByYearUseCase struct {
 	albumRepository repository.AlbumRepository
 }
 
-func NewFindAlbumByYearUsecase(albumRepository repository.AlbumRepository) *FindAlbumsByYearUsecase {
-	return &FindAlbumsByYearUsecase{
+func NewFindAlbumByYearUseCase(albumRepository repository.AlbumRepository) *FindAlbumsByYearUseCase {
+	return &FindAlbumsByYearUseCase{
 		albumRepository: albumRepository,
 	}
 }
 
-func (u *FindAlbumsByYearUsecase) Execute(year int) ([]*dto.AlbumDTO, error) {
+func (u *FindAlbumsByYearUseCase) Execute(year int) ([]*dto.AlbumDTO, error) {
 	albums, err := u.albumRepository.FindByYear(year)
 	if err != nil {
 		return nil, err

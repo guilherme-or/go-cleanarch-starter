@@ -5,17 +5,17 @@ import (
 	"github.com/guilherme-or/go-cleanarch-starter/internal/domain/repository"
 )
 
-type FindAlbumsByArtistUsecase struct {
+type FindAlbumsByArtistUseCase struct {
 	albumRepository repository.AlbumRepository
 }
 
-func NewFindAlbumByArtistUsecase(albumRepository repository.AlbumRepository) *FindAlbumsByArtistUsecase {
-	return &FindAlbumsByArtistUsecase{
+func NewFindAlbumByArtistUseCase(albumRepository repository.AlbumRepository) *FindAlbumsByArtistUseCase {
+	return &FindAlbumsByArtistUseCase{
 		albumRepository: albumRepository,
 	}
 }
 
-func (u *FindAlbumsByArtistUsecase) Execute(artistID int) ([]*dto.AlbumDTO, error) {
+func (u *FindAlbumsByArtistUseCase) Execute(artistID int) ([]*dto.AlbumDTO, error) {
 	albums, err := u.albumRepository.FindByArtist(artistID)
 	if err != nil {
 		return nil, err
