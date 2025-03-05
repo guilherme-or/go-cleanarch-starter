@@ -4,12 +4,12 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
-	"fmt"
 
 	"github.com/guilherme-or/go-cleanarch-starter/internal/infra/database"
 	database_repository "github.com/guilherme-or/go-cleanarch-starter/internal/infra/database/repository"
+	album_usecase "github.com/guilherme-or/go-cleanarch-starter/internal/usecase/album"
 	artist_usecase "github.com/guilherme-or/go-cleanarch-starter/internal/usecase/artist"
+	song_usecase "github.com/guilherme-or/go-cleanarch-starter/internal/usecase/song"
 
 	"github.com/guilherme-or/go-cleanarch-starter/internal/infra/config"
 )
@@ -45,8 +45,8 @@ func db() *sql.DB {
 func deps(db *sql.DB) {
 	// Repositories
 	artistRepo := database_repository.NewPostgreSQLArtistRepository(db)
-	// albumRepo := database_repository.NewPostgreSQLAlbumRepository(db)
-	// songRepo := database_repository.NewPostgreSQLSongRepository(db)
+	albumRepo := database_repository.NewPostgreSQLAlbumRepository(db)
+	songRepo := database_repository.NewPostgreSQLSongRepository(db)
 
 	// Use Cases
 	// Artist
@@ -54,15 +54,13 @@ func deps(db *sql.DB) {
 	findArtistByNameUC := artist_usecase.NewFindArtistByNameUsecase(artistRepo)
 	findArtistsByNationalityUC := artist_usecase.NewFindArtistsByNationalityUsecase(artistRepo)
 
-	as, _ := findAllArtistsUC.Execute()
-	j, _ := json.MarshalIndent(as, "", "  ")
-	fmt.Println(string(j))
+	// Album
+	findAlbumByTitleUC := album_usecase.NewFindAlbumByTitleUseCase(albumRepo)
+	findAlbumsByArtistUC := album_usecase.NewFindAlbumsByArtistUseCase(albumRepo)
+	findAlbumsByYearUC := album_usecase.NewFindAlbumsByYearUseCase(albumRepo)
 
-	a, _ := findArtistByNameUC.Execute("Daft Punk")
-	j, _ = json.MarshalIndent(a, "", "  ")
-	fmt.Println(string(j))
-
-	as, _ = findArtistsByNationalityUC.Execute("American")
-	j, _ = json.MarshalIndent(as, "", "  ")
-	fmt.Println(string(j))
+	// Song
+	findSongsByAlbumUC := song_usecase.NewFindSongsByAlbumUseCase(songRepo)
+	findSongsByDurationIntervalUC := song_usecase.NewFindSongsByDurationInternalUseCase(songRepo)
+	findSongsByArtistUC := song_usecase.NewFindSongsByArtistUseCase(songRepo)
 }
