@@ -4,6 +4,7 @@ package config
 // and should be used by all packages inside infrastructure layer.
 type e struct {
 	Database database
+	Server   server
 }
 
 // Database config type containing most common database configuration
@@ -16,4 +17,11 @@ type database struct {
 	Path         string
 	URL          string
 	DSN          string
+}
+
+type server struct {
+	Addr   string
+	Secure bool
+	Host   string
+	Port   int
 }

@@ -15,6 +15,7 @@ var E *e = new(e)
 // that are required on the system
 var shouldLoad = []string{
 	"DATABASE_DSN",
+	"SERVER_ADDR",
 }
 
 // Checks if the required environment variables are set.
@@ -26,6 +27,16 @@ func checkRequired() error {
 		}
 	}
 	return nil
+}
+
+// Function to load the OS environment configuration
+// into the environment struct.
+func loadConfig() {
+	// database configuration
+	E.Database.DSN = os.Getenv("DATABASE_DSN")
+
+	// server configuration
+	E.Server.Addr = os.Getenv("SERVER_ADDR")
 }
 
 // LoadEnv loads the environment configuration manually.
@@ -45,8 +56,8 @@ func LoadEnv(filenames ...string) error {
 		return err
 	}
 
-	// database configuration
-	E.Database.DSN = os.Getenv("DATABASE_DSN")
+	// Load the environment configuration
+	loadConfig()
 
 	return nil
 }
