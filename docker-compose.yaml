@@ -1,0 +1,12 @@
+services:
+  database:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: example
+    ports:
+      - "5432:5432"
+    volumes:
+      # Mounting the initial migration and dump files
+      - ./internal/infra/sql/migration/initial.sql:/docker-entrypoint-initdb.d/initial.sql

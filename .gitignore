@@ -1,0 +1,12 @@
+# Binaries and Builds
+*.exe
+/bin
+
+# Environment
+.env
+.*rc
+*.log
+
+# IDE
+.idea
+.vscode
